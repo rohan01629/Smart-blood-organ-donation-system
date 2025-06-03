@@ -1,13 +1,10 @@
 import React from "react";
-// import { userMenu } from "./Menus/userMenu";
 import { useLocation, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "../../../styles/Layout.css";
 
 const Sidebar = () => {
-  //GET USER STATE
   const { user } = useSelector((state) => state.auth);
-
   const location = useLocation();
 
   return (
@@ -40,6 +37,7 @@ const Sidebar = () => {
               </div>
             </>
           )}
+
           {user?.role === "admin" && (
             <>
               <div
@@ -66,8 +64,17 @@ const Sidebar = () => {
                 <i className="fa-solid fa-hospital"></i>
                 <Link to="/org-list">Organisation List</Link>
               </div>
+              <div
+                className={`menu-item ${
+                  location.pathname === "/analytics" && "active"
+                }`}
+              >
+                <i className="fa-solid fa-chart-line"></i>
+                <Link to="/analytics">Analytics</Link>
+              </div>
             </>
           )}
+
           {(user?.role === "donar" || user?.role === "hospital") && (
             <div
               className={`menu-item ${
@@ -78,6 +85,7 @@ const Sidebar = () => {
               <Link to="/orgnaisation">Orgnaisation</Link>
             </div>
           )}
+
           {user?.role === "hospital" && (
             <div
               className={`menu-item ${
@@ -88,6 +96,7 @@ const Sidebar = () => {
               <Link to="/consumer">Consumer</Link>
             </div>
           )}
+
           {user?.role === "donar" && (
             <div
               className={`menu-item ${
@@ -98,19 +107,6 @@ const Sidebar = () => {
               <Link to="/donation">Donation</Link>
             </div>
           )}
-
-          {/* {userMenu.map((menu) => {
-            const isActive = location.pathname === menu.path;
-            return (
-              <div
-                className={`menu-item ${isActive && "active"}`}
-                key={menu.name}
-              >
-                <i className={menu.icon}></i>
-                <Link to={menu.path}>{menu.name}</Link>
-              </div>
-            );
-          })} */}
         </div>
       </div>
     </div>

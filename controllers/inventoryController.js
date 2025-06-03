@@ -101,17 +101,33 @@ const getInventoryHospitalController = async (req, res) => {
 // GET RECENT BLOOD RECORDS
 const getRecentInventoryController = async (req, res) => {
   try {
-    const inventory = await inventoryModel
-      .find({ organisation: req.user.userId })  // This seems to be a potential issue
-      .limit(10)
-      .sort({ createdAt: -1 });
+    const isAdmin = req.user.role === "admin";
 
-    return res.status(200).send({ success: true, message: "Recent Inventory Data", inventory });
+    const filter = isAdmin
+      ? {} // Admins see all records
+      : { organisation: new mongoose.Types.ObjectId(req.user.userId) };
+
+    const inventory = await inventoryModel
+      .find(filter)
+      .populate("organisation", "email") // Populate email for display
+      .sort({ createdAt: -1 })
+      .limit(10);
+
+    return res.status(200).send({
+      success: true,
+      message: "Recent Inventory Data",
+      inventory,
+    });
   } catch (error) {
     console.log(error);
-    return res.status(500).send({ success: false, message: "Error In Recent Inventory API", error });
+    return res.status(500).send({
+      success: false,
+      message: "Error In Recent Inventory API",
+      error,
+    });
   }
 };
+
 
 
 

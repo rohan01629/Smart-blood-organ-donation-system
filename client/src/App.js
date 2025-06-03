@@ -16,11 +16,14 @@ import DonarList from "./pages/Admin/DonarList";
 import HospitalList from "./pages/Admin/HospitalList";
 import OrgList from "./pages/Admin/OrgList";
 import AdminHome from "./pages/Admin/AdminHome";
+import AdminAnalytics from "./pages/Dashboard/AdminAnalytics";
+import OrganInventoryPage from './pages/OrganInventoryPage';
 function App() {
   return (
     <>
       <ToastContainer />
       <Routes>
+        {/* Admin Routes */}
         <Route
           path="/admin"
           element={
@@ -54,6 +57,7 @@ function App() {
           }
         />
 
+        {/* User Routes */}
         <Route
           path="/hospital"
           element={
@@ -86,6 +90,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/organ-inventory" element={<OrganInventoryPage />} />
         <Route
           path="/orgnaisation"
           element={
@@ -110,6 +115,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Auth Routes */}
         <Route
           path="/login"
           element={

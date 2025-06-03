@@ -118,6 +118,8 @@ const Analytics = () => {
                 <td>{record.inventoryType}</td>
                 <td>{record.quantity} ML</td>
                 <td>{record.email}</td>
+                <td>{record.organisation?.email || "Unknown"}</td>
+
                 <td>{moment(record.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
               </tr>
             ))}

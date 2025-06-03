@@ -1,5 +1,5 @@
 const JWT = require("jsonwebtoken");
-
+const User = require('../models/userModel');
 module.exports = async (req, res, next) => {
   try {
     // Log to see if token is being passed correctly
@@ -23,7 +23,9 @@ module.exports = async (req, res, next) => {
           message: "Auth Failed",
         });
       } else {
-        console.log("Decoded Token:", decode); // Log the decoded token to verify userId
+        // Log the decoded token to verify userId
+        console.log("Decoded Token:", decode);
+
         // Attach user info to the request object for further use in controllers
         req.user = { userId: decode.userId };
         next(); // Proceed to the next middleware/controller
@@ -36,5 +38,7 @@ module.exports = async (req, res, next) => {
       message: "Auth Failed",
       error,
     });
+
   }
+  
 };

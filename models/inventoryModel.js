@@ -14,7 +14,7 @@ const inventorySchema = new mongoose.Schema(
     },
     quantity: {
       type: Number,
-      require: [true, "blood quanity is require"],
+      required: [true, "blood quantity is require"],  // fixed typo here as well
     },
     email: {
       type: String,
@@ -22,19 +22,18 @@ const inventorySchema = new mongoose.Schema(
     },
     organisation: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
-      required: [true, "organisation is require"],
+      ref: "User",  // <-- Fixed here
     },
     hospital: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
+      ref: "User",  // <-- Fixed here
       required: function () {
         return this.inventoryType === "out";
       },
     },
     donar: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
+      ref: "User",  // <-- Fixed here
       required: function () {
         return this.inventoryType === "in";
       },
