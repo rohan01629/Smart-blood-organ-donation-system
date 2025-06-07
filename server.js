@@ -6,7 +6,8 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const organInventoryRoutes = require('./routes/organInventoryRoutes');
 const userRoutes = require('./routes/userRoutes');
-// Load environment variables
+
+// Load environment variables from .env file
 dotenv.config();
 
 // Connect to MongoDB
@@ -16,14 +17,16 @@ connectDB();
 const app = express();
 
 // Middlewares
-app.use(express.json());
+app.use(express.json());  // For parsing application/json
+
+// Enable CORS from your React frontend URL
 app.use(cors({
   origin: "http://localhost:3000",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
 
-// HTTP request logger (dev mode)
+// HTTP request logger for development
 app.use(morgan("dev"));
 
 // Simple logger for every request (debugging)
@@ -32,7 +35,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
+// API routes
 app.use("/api/v1/test", require("./routes/testRoutes"));
 app.use("/api/v1/auth", require("./routes/authRoutes"));
 app.use("/api/v1/inventory", require("./routes/inventoryRoutes"));
@@ -40,7 +43,8 @@ app.use("/api/v1/analytics", require("./routes/analyticsRoutes"));
 app.use("/api/v1/admin", require("./routes/adminRoutes"));
 app.use('/api/v1/organ-inventory', organInventoryRoutes);
 app.use('/api/v1/users', userRoutes);
-// Quick test route
+
+// Quick test route for organ inventory API
 app.get('/api/v1/organ-inventory/test', (req, res) => {
   res.json({ success: true, message: "Organ Inventory API working!" });
 });
@@ -55,13 +59,13 @@ app.use((req, res, next) => {
   res.status(404).json({ success: false, message: 'Route not found' });
 });
 
-// Global error handler
+// Global error handler (fallback)
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ success: false, message: 'Server error', error: err.message });
 });
 
-// Start server
+// Start the server
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(

@@ -21,8 +21,34 @@ const organInventorySchema = new mongoose.Schema({
     ref: 'User',
   },
   hospital: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,  // Changed from ObjectId to String for hospital name
+  },
+  inOrOut: {
+    type: String,
+    enum: ['in', 'out'],
+    required: true,
+  },
+  donorReceiverName: {
+    type: String,
+    required: true,
+  },
+  age: {
+    type: Number,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  medicalDocumentUrl: {
+    type: String,
+  },
+  identityProofUrl: {
+    type: String,
   },
 }, { timestamps: true });
 
